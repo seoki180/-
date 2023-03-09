@@ -3,9 +3,11 @@ const express = require("express")
 const body_parser = require("body-parser")
 const app = express()
 
-// const UserStorage = require("./src/model/UserStorage")
+
 const User = require("./src/model/User")
 
+
+const PORT = 3000
 app.use(morgan('dev'))
 
 app.set("views","./src/views")
@@ -27,6 +29,6 @@ app.post("/login",async (req,res)=>{
     res.json(await user.login())
 }) 
 
-
-
-module.exports = app
+app.listen(PORT,()=>{
+    console.log(`port on ${PORT}`)
+})
