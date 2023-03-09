@@ -18,7 +18,14 @@ class User{
         return {success : false,msg : "no such id"}
     }
 
-    
+    async register(){
+        const client = this.user
+        if(await UserStorage.checkIdDuplication(client.id)){//중복한다면 false , 아니라면 true
+            const userStorage = await UserStorage.putUserInfoToDB(client)
+            return {success : true}
+        }
+        return {success : false}
+    }
 }
 
 module.exports = User

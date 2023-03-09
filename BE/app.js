@@ -7,7 +7,7 @@ const app = express()
 const User = require("./src/model/User")
 
 
-const PORT = 3000
+const PORT = 4000
 app.use(morgan('dev'))
 
 app.set("views","./src/views")
@@ -28,6 +28,11 @@ app.post("/login",async (req,res)=>{
 
     res.json(await user.login())
 }) 
+
+app.post("/register", async (req,res)=>{
+    const user = new User(req.body)
+    res.json(await user.register())
+})
 
 app.listen(PORT,()=>{
     console.log(`port on ${PORT}`)
