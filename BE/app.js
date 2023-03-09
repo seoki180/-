@@ -8,8 +8,14 @@ const User = require("./src/model/User")
 
 app.use(morgan('dev'))
 
+app.set("views","./src/views")
+app.set("view engine", "ejs")
 app.use(body_parser.json())
 app.use(body_parser.urlencoded({extended:true}))
+
+app.get("/",(req,res)=>{
+    res.render("home/index")
+})
 
 app.get("/login",async (req,res)=>{
     const user = new User(req.body)
