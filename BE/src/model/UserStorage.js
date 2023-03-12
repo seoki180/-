@@ -1,9 +1,10 @@
 const db = require("../../config/database")
+const crypto = require("../../config/cryptopy")
 
 class UserStorage{
     constructor(user){
         this.id = user.id,
-        this.passwd = user.passwd,
+        this.password = user.password,
         this.name = user.name
     }   
 
@@ -30,13 +31,16 @@ class UserStorage{
         })
     }
 
-    static  putUserInfoToDB(user){
+    static  async putUserInfoToDB(user){
+        const {
+            hashedPassword,
+            salt
+        } = await crypto.createHashedPassword(user.password)
         const id = user.id
-        const password = user.passwd
         const name = user.name
 
-        console.log(id,password,name)
-        const sql = `insert into users (userId, userPasswd, userName,signedDate) value("${id}","${password}","${name}",now())`
+        console.log(id, name, hashedPassword, salt)
+        const sql = `insert into users (userId, userPassword, userName,userSalt, signedDate) value("${id}","${hashedPassword}","${name}","${salt}",now())`
         return new Promise((resolve,reject)=>{
             db.query(sql,(err,data)=>{
                 if(err) throw err
