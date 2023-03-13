@@ -10,6 +10,7 @@ class User{
     async login(){
         const client = this.user
         const userStorage = await UserStorage.getUserInfoFromDB(client.id)
+        console.log(userStorage)
         if(userStorage){
             const verified = await crypto.verifyPassword(client.password,userStorage.userSalt,userStorage.userPassword)
             console.log(verified)
@@ -23,15 +24,17 @@ class User{
 
     async register(){
         const client = this.user
-
-        console.log(client)
-        if(await UserStorage.checkIdDuplication(client.id)){//중복한다면 false , 아니라면 true
-            const userStorage = await UserStorage.putUserInfoToDB(client)
-            console.log(userStorage)
-            return {success : true}
-        } 
-        return {success : false , msg : "id is already exist"}
+        
+        const userStorage =  new UserStorage(client)
+        if(await userStorage.checkIdDuplication(client.id)){
+            return {success : false, msg : "id already exist"}
+        }
+        else{
+            await userStorage.putUserInfoToDB(client)
+            return {success : true, msg : "register success"}
+        }
     }
+
 }
 
 module.exports = User

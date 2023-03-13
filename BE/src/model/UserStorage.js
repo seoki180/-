@@ -1,5 +1,6 @@
-const db = require("../../config/database")
+const {stablishedConnection}  = require('../../config/database');
 const crypto = require("../../config/cryptopy")
+
 
 class UserStorage{
     constructor(user){
@@ -8,46 +9,69 @@ class UserStorage{
         this.name = user.name
     }   
 
+
     static  getUserInfoFromDB(userId){
-        const sql = `select * from users where userId = '${userId}'`
         return new Promise((resolve,reject)=>{
-            db.query(sql,(err,data)=>{
-                if(err) throw err
-                resolve(data[0])
+            stablishedConnection()
+            .then((db)=>{
+                const sql = `select * from users where userId = '${userId}'`
+                db.query(sql,(err,data)=>{
+                    if(err) throw err
+                    else{
+                        resolve(data[0])
+                    }
+                })
+            })
+            .catch((err)=>{
+                console.error(err)
             })
         })
     }
 
-    static  checkIdDuplication(userId){
-        const sql = `select * from users where userId = '${userId}'`
+    checkIdDuplication(userId){
+        return new Promise((resolve, reject) => {
+            stablishedConnection()
+            .then((db)=>{
+                const sql = `select * from users where userId = '${userId}'`
+                    db.query(sql,(err,data) => {
+                        if(err) throw err
+                        else{
+                            console.log(data[0])
+                            if(data[0] === undefined) resolve(false) //존재한다 - > 중복
+                            else resolve(true) //존재하지 않는다 -> 아이디 생성 가능
+                        }
+                    })
+                })
+            })
+            .catch((err)=>{
+                console.error(err)
+            })
+        }
+    
+
+    async putUserInfoToDB(user){
         return new Promise((resolve,reject)=>{
-            db.query(sql,(err,data) => {
-                if(err) throw err
-                else{
-                    if(data[0]) resolve(false)
-                    else resolve(true)
-                }
+            stablishedConnection()
+            .then( async (db)=>{
+                const {
+                    hashedPassword,
+                    salt
+                } =  await crypto.createHashedPassword(user.password)
+                const id = user.id
+                const name = user.name
+        
+                console.log(id, name, hashedPassword, salt)
+                
+                const sql = `insert into users (userId, userPassword, userName,userSalt, signedDate) value("${id}","${hashedPassword}","${name}","${salt}",now())`
+                    db.query(sql,(err,data)=>{
+                        if(err) throw err
+                        resolve(data)
+                    })
+            })
+            .catch((err)=>{
+                console.error(err)
             })
         })
-    }
-
-    static  async putUserInfoToDB(user){
-        const {
-            hashedPassword,
-            salt
-        } = await crypto.createHashedPassword(user.password)
-        const id = user.id
-        const name = user.name
-
-        console.log(id, name, hashedPassword, salt)
-        const sql = `insert into users (userId, userPassword, userName,userSalt, signedDate) value("${id}","${hashedPassword}","${name}","${salt}",now())`
-        return new Promise((resolve,reject)=>{
-            db.query(sql,(err,data)=>{
-                if(err) throw err
-                resolve(data)
-            })
-        })
-
     }
 }
 
