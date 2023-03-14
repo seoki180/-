@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <center>
+        <h1>어서오세요</h1>
+        <form action = "/admin/logout">
+            <button>로그아웃</button>
+        </form>
+        <div>
+            <h2>전체 유저 수</h2>
+            <ul id = "list"></ul>
+        </div>
+    </center>
+</body>
+</html>
+
+<script>
+    
+    const list = document.getElementById("list")
+    list.innerHTML = ''
+    const li = document.createElement('li')
+    li.innerHTML = `
+        <span>123</span>
+        <hr>
+    `
+    list.appendChild(li)
+</script>
