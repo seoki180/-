@@ -20,11 +20,12 @@ module.exports = {
         return { hashedPassword,salt}
     },
     
-    async verifyPassword(password,userSalt,userPassword){
-        const key = await pbkdf2Promise(password,userSalt,99999,64,"sha512")
+    async verifyPassword(cryptoData){
+        
+        const key = await pbkdf2Promise(cryptoData[0],cryptoData[1],99999,64,"sha512")
         const hashedPassword = key.toString("base64")
     
-        if(hashedPassword === userPassword) return true
+        if(hashedPassword === cryptoData[2]) return true
         return false
     }
 }

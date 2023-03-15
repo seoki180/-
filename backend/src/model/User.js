@@ -1,4 +1,3 @@
-//define user aciton
 const UserStorage = require('./UserStorage')
 const crypto = require("../../config/cryptopy")
 
@@ -9,10 +8,15 @@ class User{
 
     async login(){
         const client = this.user
-        const userStorage = await UserStorage.getUserInfoFromDB(client.id)
-        if(userStorage){
-            const verified = await crypto.verifyPassword(client.password,userStorage.userSalt,userStorage.userPassword)
-            console.log(verified)
+        const userInfo =  await UserStorage.getUserInfoFromDB(client.id)
+
+        if(userInfo){
+            const cryptoData = [
+                client.password,
+                userInfo.userSalt,
+                userInfo.userPassword
+            ]
+            const verified = await crypto.verifyPassword(cryptoData)
             if(verified){
                 return {success : true, msg : "login success"}
             }
@@ -24,8 +28,10 @@ class User{
     async register(){
         const client = this.user
         const userStorage =  await UserStorage.putUserInfoToDB(client)
-        return userStorage
-
+        if(userStorage){
+            return {success : true, msg : "register sucess"}
+        }
+        return {success : false, msg : "alreday exist id"}
     }
 
 }
