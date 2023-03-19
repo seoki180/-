@@ -6,12 +6,16 @@ dotenv.config("../.env")
 exports.verifyToken = async (req,res,next)=>{
     try{
         const decoded = await token.decodeToken(req.headers.authorization)
-        console.log(decoded)
         req.decoded = decoded
         return next()
     }
     catch(err){
         if (err.name === 'TokenExpiredError') {
+            // req.decode = {
+            //     code : 419,
+            //     msg : err.name,
+            // }
+            // return next()
             return res.status(419).json({
                 code: 419,
                 message: err.name

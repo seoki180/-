@@ -5,7 +5,7 @@ const methodOverride = require("method-override")
 const body_parser = require("body-parser")
 const app = express()
 
-const ApiRouter = require("./router/api_router")
+const UserRouter = require("./router/users_router")
 
 
 // app.use(session({
@@ -20,7 +20,7 @@ app.use(morgan('dev'))
 app.use(body_parser.json())
 app.use(body_parser.urlencoded({extended:true}))
 
-app.use("/api",ApiRouter)
+app.use("/users",UserRouter)
 app.use((req,res,next)=>{
         res.status(404).send("404/not found")
     })

@@ -6,6 +6,8 @@ class User{
         this.user = user
     }
 
+    
+
     async login(){
         const client = this.user
         const userInfo =  await UserStorage.getUserInfoFromDB(client.id)

@@ -4,7 +4,7 @@ const crypto = require("../../config/cryptopy")
 
 class UserStorage{
     static  getUserInfoFromDB(userId){
-        const sql = `select * from users where userId = '${userId}'`
+        const sql = `select * from Users where userId = '${userId}'`
         return new Promise((resolve,reject)=>{
             try{
                 db.query(sql,(err,data)=>{
@@ -19,7 +19,7 @@ class UserStorage{
     }
 
     static isIdDuplicated(userId){
-        const sql = `select userId from users where userId = "${userId}"`
+        const sql = `select userId from Users where userId = "${userId}"`
         return new Promise((resolve,reject)=>{
             try{
                 db.query(sql,(err,data)=>{
@@ -50,7 +50,7 @@ class UserStorage{
                 } = await crypto.createHashedPassword(user.password)
                 const id = user.id
                 const name = user.name  
-                const sql = `insert into users (userId, userPassword, userName, userSalt, signedDate) value("${id}", '${hashedPassword}','${name}','${salt}',now())`
+                const sql = `insert into Users (userId, userPassword, userName, userSalt, signedDate) value("${id}", '${hashedPassword}','${name}','${salt}',now())`
 
                 try{
                     db.query(sql,(err,data)=>{

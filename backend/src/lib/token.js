@@ -8,5 +8,23 @@ module.exports ={
                 else resolve(decoded)
             })
         })
-    }
+    },
+
+    signToken : (userId)=>{
+        try{
+            const id = userId
+            const token = jwt.sign({
+                id,
+            },process.env.JWT_SECRET,{
+                expiresIn : '1m',
+                issuer : userId,
+            })
+            console.log(token)
+            return true
+        }
+        catch(err){
+            console.error(err)
+            return false
+        }
+    }   
 }
