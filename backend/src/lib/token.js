@@ -10,21 +10,49 @@ module.exports ={
         })
     },
 
-    signToken : (userId)=>{
+    accessToken : (userId)=>{
         try{
             const id = userId
             const token = jwt.sign({
                 id,
             },process.env.JWT_SECRET,{
-                expiresIn : '1m',
+                expiresIn : '30m',
                 issuer : userId,
             })
             console.log(token)
-            return true
+            return {
+                success : true,
+                token : token
+            }
         }
         catch(err){
             console.error(err)
-            return false
+            return{
+                success : false
+            }
         }
-    }   
+    },
+
+    refreshToken : (userId)=>{
+        try{
+            const id = userId
+            const token = jwt.sign({
+                id,
+            },process.env.JWT_REFRESH,{
+                expiresIn : '180d',
+                issuer : userId,
+            })
+            console.log(token)
+            return {
+                success : true,
+                token : token,
+            }
+        }
+        catch(err){
+            console.error(err)
+            return {
+                success : false
+            }
+        }
+    }
 }

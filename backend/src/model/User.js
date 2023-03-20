@@ -5,9 +5,7 @@ class User{
     constructor(user){
         this.user = user
     }
-
     
-
     async login(){
         const client = this.user
         const userInfo =  await UserStorage.getUserInfoFromDB(client.id)
@@ -31,11 +29,15 @@ class User{
         const client = this.user
         const userStorage =  await UserStorage.putUserInfoToDB(client)
         if(userStorage){
-            return {success : true, msg : "register sucess"}
+            return true
         }
-        return {success : false, msg : "alreday exist id"}
+        return false
     }
 
+    static async profile(userId){
+        const userStorage = await UserStorage.getUserInfoFromDB(userId)
+        return userStorage
+    }
 }
 
 module.exports = User

@@ -68,32 +68,6 @@ class UserStorage{
         })
     }
     
-//     return new Promise((resolve,reject)=>{
-//         stablishedConnection()
-//         .then( async (db)=>{
-//             if(!await this.isIdDuplicated(user.id)){
-//                 const {
-//                     hashedPassword,
-//                     salt
-//                 } =  await crypto.createHashedPassword(user.password)
-//                 const id = user.id
-//                 const name = user.name
-//                 const sql = `insert into users (userId, userPassword, userName,userSalt, signedDate) value("${id}","${hashedPassword}","${name}","${salt}",now())`
-//                 db.query(sql,(err,data)=>{
-//                     if(err) reject(err)
-//                     else{
-//                         resolve(true)
-//                     }
-//                 })
-//             }
-//             else{
-//                 resolve(false)
-//             }
-//         })
-//         .catch((err)=>{
-//             console.error(err)
-//         })
-//     })
-// }
+
 }
 module.exports = UserStorage    

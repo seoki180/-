@@ -1,7 +1,6 @@
 const User = require("../src/model/User")
 const token = require("../src/lib/token")
 
-
 const post ={
     login :   async (req,res,next)=>{
         const user = new User(req.body)
@@ -9,10 +8,17 @@ const post ={
 
         //TODO: 리팩토링 방법구상, 너무 코드가 더러움
         if(result.success){
-            if(token.signToken(req.body.id)){
+            const accessToken = token.accessToken(req.body.id)
+            const refreshToken = token.refreshToken(req.body.id)
+            const jwt = {
+                access : accessToken["token"],
+                refresh : refreshToken["token"]
+            }
+            if(accessToken.success && refreshToken.success){
                 res.status(200).json({
                     code : 200,
                     result,
+                    jwt
                 })
             }
             else{
@@ -34,24 +40,37 @@ const post ={
     register :  async (req,res) => {
         const user = new User(req.body)
         const result = await user.register()
-        res.status(200).json(result)
-    }
-}
-
-const page = {
-    
-    login : (req,res)=>{
-        if(req.decoded){
-            console.log('verify')
+        if(result){
+            res.status(200).json({
+                code : 200,
+                msg : "register success"
+            })
         }
         else{
-            console.log("no")
+            res.status(401).json({
+                code : 401,
+                msg : "already exist id"
+            })
         }
-        res.json(req.decoded)
+    },
+
+    profile : async(req,res)=>{
+        if(req.decoded){
+            const iss = req.decoded.iss
+            const data = await User.profile(iss)
+            const userProfile = data['userProfile']
+            res.json({
+                data : data,
+                userProfile : userProfile
+            })
+        }
+        else{
+            res.json({})
+        }
     }
 }
 
+
 module.exports = {
-    post,
-    page
+    post
 }
