@@ -57,12 +57,8 @@ const post ={
     profile : async(req,res)=>{
         if(req.decoded){
             const iss = req.decoded.iss
-            const data = await User.profile(iss)
-            const userProfile = data['userProfile']
-            res.json({
-                data : data,
-                userProfile : userProfile
-            })
+            const data = await User.getProfile(iss)
+            res.json({data : data})
         }
         else{
             res.json({})

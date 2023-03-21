@@ -67,7 +67,16 @@ class UserStorage{
             }
         })
     }
-    
+    static async getUserData(userId){
+        const sql = `select userId, userName, signedDate from Users where userId = "${userId}"` 
+        return new Promise((resolve,reject)=>{
+            db.query(sql,(err,data)=>{
+                if(err) reject(err)
+                else resolve(data)
+            })
+        })
+
+    }
 
 }
 module.exports = UserStorage    

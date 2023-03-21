@@ -19,7 +19,6 @@ module.exports ={
                 expiresIn : '30m',
                 issuer : userId,
             })
-            console.log(token)
             return {
                 success : true,
                 token : token
@@ -42,7 +41,6 @@ module.exports ={
                 expiresIn : '180d',
                 issuer : userId,
             })
-            console.log(token)
             return {
                 success : true,
                 token : token,

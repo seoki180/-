@@ -11,11 +11,6 @@ exports.verifyToken = async (req,res,next)=>{
     }
     catch(err){
         if (err.name === 'TokenExpiredError') {
-            // req.decode = {
-            //     code : 419,
-            //     msg : err.name,
-            // }
-            // return next()
             return res.status(419).json({
                 code: 419,
                 message: err.name

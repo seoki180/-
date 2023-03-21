@@ -34,9 +34,9 @@ class User{
         return false
     }
 
-    static async profile(userId){
-        const userStorage = await UserStorage.getUserInfoFromDB(userId)
-        return userStorage
+    static async getProfile(userId){
+        const data = await UserStorage.getUserData(userId);
+        return data[0]
     }
 }
 
