@@ -58,7 +58,7 @@ const post ={
         if(req.decoded){
             const iss = req.decoded.iss
             const data = await User.getProfile(iss)
-            res.json({data : data})
+            res.json({code : 200,data : data},)
         }
         else{
             res.json({})
