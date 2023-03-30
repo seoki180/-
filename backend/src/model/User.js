@@ -34,9 +34,14 @@ class User{
         return false
     }
 
-    static async getProfile(userId){
-        const data = await UserStorage.getUserData(userId);
+    static async getInfoById(userId){
+        const data = await UserStorage.getUserData(userId)
         return data[0]
+    }
+
+    static async uploadPhoto(file,userId){
+        const id = await UserStorage.getUniqueId(userId)
+        await UserStorage.uploadPhotoDB(file,id)
     }
 }
 

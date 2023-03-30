@@ -54,16 +54,30 @@ const post ={
         }
     },
 
-    profile : async(req,res)=>{
+
+    getProfile : async(req,res)=>{
         if(req.decoded){
-            const iss = req.decoded.iss
-            const data = await User.getProfile(iss)
-            res.json({code : 200,data : data},)
+            const id = req.decoded.id
+            const data = await User.getInfoById(id)
+            res.status(200).json({
+                code : 200,
+                data : data,
+            })
         }
         else{
-            res.json({})
+            res.status(410).json({code : 419})
         }
+    },
+
+    uploadPhoto : async(req,res)=>{
+        const photo = req.file
+        const user = req.decoded.id
+        console.log(photo)
+        await User.uploadPhoto(photo,user)
+
+        res.send("ok")
     }
+
 }
 
 
