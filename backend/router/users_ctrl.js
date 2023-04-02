@@ -1,5 +1,6 @@
 const User = require("../src/model/User")
 const token = require("../src/lib/token")
+const UserStorage = require("../src/model/UserStorage")
 
 const post ={
     login :   async (req,res,next)=>{
@@ -55,13 +56,13 @@ const post ={
     },
 
 
-    getProfile : async(req,res)=>{
+    getInfo : async(req,res)=>{
         if(req.decoded){
             const id = req.decoded.id
             const data = await User.getInfoById(id)
             res.status(200).json({
                 code : 200,
-                data : data,
+                data : data[0],
             })
         }
         else{
@@ -76,7 +77,17 @@ const post ={
         await User.uploadPhoto(photo,user)
 
         res.send("ok")
+    },
+
+    getPhotos : async(req,res)=>{
+        const id = await UserStorage.getUniqueId(req.decoded.id)
+        const photos = await UserStorage.getUserPhoto(id)
+        photos.forEach(element => {
+            console.log(element)
+        });
+        res.status(200).json(photos)
     }
+
 
 }
 

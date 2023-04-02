@@ -78,7 +78,7 @@ class UserStorage{
     }
 
     static async uploadPhotoDB(file,id){
-        const originalname = file.originalname
+        console.log(originalname)
         const path = file.path
         const size = file.size
         const sql = `insert into Photos(user_id,photoName,photoUrl,photoSize) value("${id}","${originalname}","${path}","${size}")`
@@ -96,6 +96,14 @@ class UserStorage{
             })
         })
     }
-
+    static async getUserPhoto(id){
+        const sql = `select * from Photos where user_id = ${id}`
+        return new Promise((resolve,reject)=>{
+            db.query(sql,(err,data)=>{
+                if(err) reject(err)
+                else resolve(data)
+            })
+        })
+    }
 }
 module.exports = UserStorage    

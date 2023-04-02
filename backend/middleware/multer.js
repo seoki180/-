@@ -7,11 +7,11 @@ exports.uploads = multer({
   storage: multer.diskStorage({
     //폴더위치 지정
     destination: (req, file, done) => {
-      done(null, "uploads/images");
+      done(null, "uploads");
     },
     filename: (req, file, done) => {
       const ext = path.extname(file.originalname);
-      const fileName = path.basename(file.originalname, ext) + Date.now() + ext;
+      const fileName = path.basename(file.originalname, ext);
       done(null, fileName);
     },
   }),
