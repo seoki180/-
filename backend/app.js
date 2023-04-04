@@ -7,7 +7,7 @@ const app = express()
 
 const UserRouter = require("./router/users_router")
 const IdRouter = require("./router/id_router")
-
+const AuthRouter = require("./src/Auth/AuthRouter")
 
 // app.use(session({
 //     secret : "mykey",
@@ -23,6 +23,7 @@ app.use(body_parser.urlencoded({extended:true}))
 
 app.use("/id",IdRouter)
 app.use("/users",UserRouter)
+app.use("/auth",AuthRouter)
 app.use((req,res,next)=>{
         res.status(404).send("404/not found")
     })

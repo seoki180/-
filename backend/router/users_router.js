@@ -5,7 +5,6 @@ const {verifyToken} = require("../middleware/verifyToken")
 const { uploads } = require("../middleware/multer")
 
 
-
 router.post("/login",ctrl.post.login)
 
 router.post("/register",ctrl.post.register)

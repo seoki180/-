@@ -36,8 +36,6 @@ class User{
 
     static async getInfoById(userId){
         const data = await UserStorage.getUserData(userId)
-        // const id = await UserStorage.getUniqueId(userId)
-        // const photos = await UserStorage.getUserPhoto(id)
         return data
     }
 

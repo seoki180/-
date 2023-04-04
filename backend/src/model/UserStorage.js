@@ -68,7 +68,7 @@ class UserStorage{
         })
     }
     static async getUserData(userId){
-        const sql = `select userId, userName, signedDate, userProfile from Users where userId = "${userId}"` 
+        const sql = `select id,userId, userName, signedDate, userProfile from Users where userId = "${userId}"` 
         return new Promise((resolve,reject)=>{
             db.query(sql,(err,data)=>{
                 if(err) reject(err)
@@ -78,7 +78,7 @@ class UserStorage{
     }
 
     static async uploadPhotoDB(file,id){
-        console.log(originalname)
+        const originalname = file.originalname
         const path = file.path
         const size = file.size
         const sql = `insert into Photos(user_id,photoName,photoUrl,photoSize) value("${id}","${originalname}","${path}","${size}")`

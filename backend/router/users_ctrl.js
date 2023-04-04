@@ -66,7 +66,10 @@ const post ={
             })
         }
         else{
-            res.status(410).json({code : 419})
+            res.status(410).json({
+                code : 419,
+                data : null,
+            })
         }
     },
 
