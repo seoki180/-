@@ -1,7 +1,9 @@
-const dotenv = require("dotenv")
+// const dotenv = require("dotenv")
 const token = require("../src/lib/token")
-const jwt = require("jsonwebtoken")
-dotenv.config("../.env")
+// const jwt = require("jsonwebtoken")
+// dotenv.config("../.env")
+const baseRespone = require("../config/baseRespone")
+const { errResponse } = require("../config/response")
 
 exports.verifyToken = async (req,res,next)=>{
     try{
@@ -11,16 +13,10 @@ exports.verifyToken = async (req,res,next)=>{
     }
     catch(err){
         if (err.name === 'TokenExpiredError') {
-            return res.status(419).json({
-                code: 419,
-                message: err.name
-            });
+            return res.status(401).json(errResponse(baseRespone.USER_JWT_EXPIRED));
         }
         else{
-            return res.status(401).json({
-            code: 401,
-            message: err.name
-            })
+            return res.status(401).json(errResponse(baseRespone.USER_JWT_INVAILD))
         }
     }
 }

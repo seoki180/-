@@ -8,7 +8,8 @@ class AuthController{
         } = req.body
 
         const loginResponse = await AuthService.loginService(id,password)
-        return res.json(loginResponse)
+        const code = loginResponse.code
+        return res.status(code).json(loginResponse)
     }
 
     static async register(req,res){
@@ -19,7 +20,8 @@ class AuthController{
         } = req.body
 
         const registerResponse = await AuthService.registerService(id,password,name)
-        return res.json(registerResponse)
+        const code = registerResponse.code
+        return res.status(code).json(registerResponse)
     }
 
 

@@ -5,9 +5,10 @@ const methodOverride = require("method-override")
 const body_parser = require("body-parser")
 const app = express()
 
-const UserRouter = require("./router/users_router")
+// const UserRoute = require("./router/users_router")
 const IdRouter = require("./router/id_router")
 const AuthRouter = require("./src/Auth/AuthRouter")
+const UserRouter = require("./src/User/UserRouter")
 
 // app.use(session({
 //     secret : "mykey",
@@ -22,11 +23,14 @@ app.use(body_parser.json())
 app.use(body_parser.urlencoded({extended:true}))
 
 app.use("/id",IdRouter)
-app.use("/users",UserRouter)
+// app.use("/users",UserRoute)
 app.use("/auth",AuthRouter)
-app.use((req,res,next)=>{
-        res.status(404).send("404/not found")
-    })
+app.use("/user",UserRouter)
+
+
+app.use((err,req,res,next)=>{
+    res.status(404).send("404/not found")
+})
     
 app.use((err,req,res,next)=>{
     res.status(500).send("omg server on exception")

@@ -1,5 +1,5 @@
-const AuthProvider = require("./AuthProvider")
-const {response } = require("../../config/response")
+
+const {response,errResponse } = require("../../config/response")
 const AuthModel = require("./AuthModel")
 const token = require("../../config/token")
 const hashing = require('../../config/cryptopy')
@@ -30,13 +30,13 @@ class AuthService{
 
                     return response(baseResponse.AUTH_LOGIN_SUCCESS,{jwt:jwt})
                 }
-                return baseResponse.AUTH_LOGIN_WRONGPASSWORD
+                return errResponse(baseResponse.AUTH_LOGIN_WRONGPASSWORD)
             }
-            return baseResponse.AUHT_LOGIN_NOSUCHID
+            return errResponse(baseResponse.AUHT_LOGIN_NOSUCHID)
         }
         catch(err){
             console.log(err)
-            return baseResponse.DB_ERROR
+            return errResponse(baseResponse.DB_ERROR)
         }
     }
 
@@ -49,17 +49,17 @@ class AuthService{
                     const {hashedPassword,userSalt} = await hashing.createHashedPassword(password)
                     const result = await AuthModel.insertUserInfoQuery(id,hashedPassword,userSalt,name)
                     if(result.length != 0){
-                        return baseResponse.AUTH_REGISTER_SUCCESS
+                        return response(baseResponse.AUTH_REGISTER_SUCCESS)
                     }
-                    return baseResponse.AUTH_REGISTER_DBERROR
+                    return errResponse(baseResponse.AUTH_REGISTER_DBERROR)
                 }
-                return baseResponse.AUTH_REGISTER_EXISTNAME
+                return errResponse(baseResponse.AUTH_REGISTER_EXISTNAME)
             } 
-            return baseResponse.AUTH_REGISTER_EXISTID
+            return errResponse(baseResponse.AUTH_REGISTER_EXISTID)
         }
         catch(err){
             console.log(err)
-            throw(err)
+            return errResponse(baseResponse.DB_ERROR)
         }
     }
 

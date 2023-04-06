@@ -2,7 +2,7 @@ module.exports = {
     DB_ERROR :{
         "isSuccess" : false,
         "message" : "database error",
-        "code" : 200
+        "code" : 500
     },
 
 
@@ -15,36 +15,46 @@ module.exports = {
     AUHT_LOGIN_NOSUCHID : {
         "isSuccess" : false,
         "message" : "no such id",
-        "code" : 201
+        "code" : 400
     },
 
     AUTH_LOGIN_WRONGPASSWORD : {
         "isSuccess" : false,
         "message" : "wrong password",
-        "code" : 201
+        "code" : 400
     },
     
     AUTH_REGISTER_EXISTID : {
         "isSuccess" : false,
         "message" : "already exist id",
-        "code" : 201
+        "code" : 400
     },
     
     AUTH_REGISTER_EXISTNAME : {
         "isSuccess" : false,
         "message" : "alreay exist name",
-        "code" : 201
+        "code" : 400
     },
     
     AUTH_REGISTER_SUCCESS : {
         "isSuccess" : true,
         "message" : "register success",
-        "code" : 201
+        "code" : 200
     },
     AUTH_REGISTER_DBERROR : {
         "isSuccess" : false,
         "message" : "DB INSERT ERROR",
-        "code" : 400
+        "code" : 500
+    },
+    USER_JWT_EXPIRED : {
+        "isSuccess" : false,
+        "message" : "token is expired",
+        "code" : 401
+    },
+    USER_JWT_INVAILD : {
+        "isSuccess" : false,
+        "message" : "token is invaild",
+        "code" : 401
     },
 
     

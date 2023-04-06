@@ -20,8 +20,8 @@ module.exports ={
             },
             process.env.JWT_SECRET,
             {
-                expiresIn : '6h',
                 issuer : userName,
+                expiresIn : '6h',
             })
 
         }
@@ -40,8 +40,8 @@ module.exports ={
             },
             process.env.JWT_REFRESH,
             {
-                expiresIn : '365d',
                 issuer : userName,
+                expiresIn : '365d',
             })
         }
         catch(err){
