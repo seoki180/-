@@ -1,9 +1,8 @@
-
-const {response,errResponse } = require("../../config/response")
 const AuthModel = require("./AuthModel")
+const {response,errResponse } = require("../../config/response")
 const token = require("../../config/token")
 const hashing = require('../../config/cryptopy')
-const baseResponse = require("../../config/baseRespone")
+const baseResponse = require("../../config/baseResponse")
 
 
 class AuthService{

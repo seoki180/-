@@ -56,6 +56,23 @@ module.exports = {
         "message" : "token is invaild",
         "code" : 401
     },
+    USER_JWT_NOTDECODED:{
+        "isSuccess" : false,
+        "message" : "token didn't decoded",
+        "code" : 401
+    },
+
+    USER_PROFILE_ERROR : {
+        "isSuccess" : false,
+        "message" : "no such user in DB",
+        "code" : 401
+    },
+    USER_PROFILE_SUCCESS : {
+        "isSuccess" : true,
+        "message" : "success to get user profile",
+        "code" : 200
+    },
+
 
     
 }

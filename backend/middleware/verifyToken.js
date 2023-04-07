@@ -2,7 +2,7 @@
 const token = require("../src/lib/token")
 // const jwt = require("jsonwebtoken")
 // dotenv.config("../.env")
-const baseRespone = require("../config/baseRespone")
+const baseRespone = require("../config/baseResponse")
 const { errResponse } = require("../config/response")
 
 exports.verifyToken = async (req,res,next)=>{
