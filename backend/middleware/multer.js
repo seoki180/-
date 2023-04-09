@@ -11,7 +11,7 @@ exports.uploads = multer({
     },
     filename: (req, file, done) => {
       const ext = path.extname(file.originalname);
-      const fileName = path.basename(file.originalname, ext);
+      const fileName = path.basename(file.originalname);
       done(null, fileName);
     },
   }),

@@ -16,6 +16,15 @@ class UserService{
             return errResponse(baseResponse.DB_ERROR)
         }
     }
+
+    static async uploadService(idx,photo){
+        try{
+            const upload = await UserModel.
+        }
+        catch(err){
+            return errResponse(baseResponse.DB_ERROR)
+        }
+    }
 }
 
 module.exports = UserService

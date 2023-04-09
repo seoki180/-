@@ -72,6 +72,11 @@ module.exports = {
         "message" : "success to get user profile",
         "code" : 200
     },
+    USER_UPLOAD_SUCCESS : {
+        "isSuccess" : true,
+        "message" : "success to upload photo",
+        "code" : 200
+    },
 
 
     
